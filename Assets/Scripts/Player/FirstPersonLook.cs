@@ -1,9 +1,11 @@
-﻿using UnityEngine;
+﻿using Photon.Pun;
+using UnityEngine;
 
 namespace Player
 {
     internal class FirstPersonLook : MonoBehaviour
     {
+        [Header("Settings")]
         [SerializeField]
         private Transform character;
 
@@ -13,12 +15,17 @@ namespace Player
         [SerializeField]
         private float smoothing = 1.5f;
 
+        [SerializeField]
+        private PhotonView photonView;
+
         private Vector2 velocity;
         private Vector2 frameVelocity;
+
 
         private void Reset()
         {
             character = GetComponentInParent<FirstPersonMovement>().transform;
+            // photonView = GetComponent<PhotonView>();
         }
 
         private void Start()
@@ -28,14 +35,21 @@ namespace Player
 
         private void Update()
         {
-            Vector2 mouseDelta = new(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));
-            Vector2 rawFrameVelocity = Vector2.Scale(mouseDelta, Vector2.one * sensitivity);
-            frameVelocity = Vector2.Lerp(frameVelocity, rawFrameVelocity, 1 / smoothing);
-            velocity += frameVelocity;
-            velocity.y = Mathf.Clamp(velocity.y, -90, 90);
+            if (PhotonNetwork.IsMasterClient)
+            {
+                return;
+            }
+            else if (photonView.IsMine)
+            {
+                Vector2 mouseDelta = new(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));
+                Vector2 rawFrameVelocity = Vector2.Scale(mouseDelta, Vector2.one * sensitivity);
+                frameVelocity = Vector2.Lerp(frameVelocity, rawFrameVelocity, 1 / smoothing);
+                velocity += frameVelocity;
+                velocity.y = Mathf.Clamp(velocity.y, -90, 90);
 
-            transform.localRotation = Quaternion.AngleAxis(-velocity.y, Vector3.right);
-            character.localRotation = Quaternion.AngleAxis(velocity.x, Vector3.up);
+                transform.localRotation = Quaternion.AngleAxis(-velocity.y, Vector3.right);
+                character.localRotation = Quaternion.AngleAxis(velocity.x, Vector3.up);
+            }
         }
     }
 }
