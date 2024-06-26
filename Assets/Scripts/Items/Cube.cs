@@ -1,4 +1,5 @@
 ﻿using Photon.Pun;
+using System;
 using UnityEngine;
 
 namespace Items
@@ -9,16 +10,18 @@ namespace Items
     {
         internal enum CubeColor
         {
-            white,
-            black
+            White,
+            Black
         }
 
-        public CubeColor Color = CubeColor.white;
+        public CubeColor Color = CubeColor.White;
+
+        public Action PickedUp;
 
         private new BoxCollider collider;
         private PhotonView photonView;
 
-        private void Start()
+        private void Awake()
         {
             photonView = GetComponent<PhotonView>();
             collider = GetComponent<BoxCollider>();
@@ -34,6 +37,7 @@ namespace Items
         private void SetIsTrigger()
         {
             collider.isTrigger = true;
+            PickedUp?.Invoke();
         }
 
         public void Drop()

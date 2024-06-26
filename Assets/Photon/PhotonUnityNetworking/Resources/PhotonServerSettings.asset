@@ -49,6 +49,12 @@ MonoBehaviour:
   - UncarryItem
   - SetIsTrigger
   - UnsetIsTrigger
+  - ResetSlotRPC
+  - SetBlackCubeRPC
+  - SetWhiteCubeRPC
+  - FillCubes
+  - InitializeCubes
+  - turnOffCubesRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

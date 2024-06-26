@@ -31,7 +31,7 @@ namespace Player
         private GameObject carryingItem;
         private int carryingObjectID;
 
-        private void Start()
+        private void Awake()
         {
             photonView = GetComponent<PhotonView>();
         }
