@@ -1,5 +1,6 @@
 ﻿using Items;
 using Photon.Pun;
+using System;
 using UnityEngine;
 
 namespace Level
@@ -26,6 +27,7 @@ namespace Level
             {
                 slState = value;
                 Debug.Log("New slot state:" + slState);
+                SlotStateChanged?.Invoke();
             }
         }
 
@@ -35,6 +37,8 @@ namespace Level
         private Cube cubeComponent;
 
         private PhotonView photonView;
+
+        public static Action SlotStateChanged;
 
         private void Awake()
         {
@@ -67,7 +71,10 @@ namespace Level
             cube.transform.rotation = Quaternion.Euler(Vector3.zero);
             cube.transform.localScale = Vector3.one;
 
-            cubeComponent.PickedUp += ResetSlot;
+            if (PhotonNetwork.IsMasterClient && photonView.IsMine)
+            {
+                cubeComponent.PickedUp += ResetSlot;
+            }
         }
 
         private void ResetSlot()
@@ -78,13 +85,10 @@ namespace Level
         [PunRPC]
         private void ResetSlotRPC()
         {
-            if (cubeComponent != null)
-            {
-                cubeComponent.PickedUp -= ResetSlot;
-                SlState = SlotState.Empty;
-                cube = null;
-                cubeComponent = null;
-            }
+            cubeComponent.PickedUp -= ResetSlot;
+            SlState = SlotState.Empty;
+            cube = null;
+            cubeComponent = null;
         }
     }
 }

@@ -709,6 +709,7 @@ GameObject:
   - component: {fileID: 480165504204675378}
   - component: {fileID: 2194366972995173418}
   - component: {fileID: 1059574069283015115}
+  - component: {fileID: 6110209101392964114}
   m_Layer: 0
   m_Name: SetPlatfrom
   m_TagString: Untagged
@@ -834,6 +835,19 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &6110209101392964114
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4632085335893794698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0f6b0ece2f52ee4d86c3b68c098f8b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cubeSlots: []
 --- !u!1 &4873508414112044010
 GameObject:
   m_ObjectHideFlags: 0

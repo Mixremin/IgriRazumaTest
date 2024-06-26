@@ -9,17 +9,15 @@ namespace Level
     internal class ComparissonPlatform : MonoBehaviour
     {
         [SerializeField]
-        private int[,] slots = new int[3, 3];
-
-        [SerializeField]
         private List<ExampleSlot> exampleSlots;
 
+        private int[,] slots = new int[3, 3];
         private PhotonView photonView;
 
         private void Awake()
         {
             photonView = GetComponent<PhotonView>();
-            if (PhotonNetwork.IsMasterClient)
+            if (PhotonNetwork.IsMasterClient && photonView.IsMine)
             {
                 photonView.RPC("InitializeCubes", RpcTarget.All);
             }
@@ -28,7 +26,7 @@ namespace Level
 
         private void Start()
         {
-            if (PhotonNetwork.IsMasterClient)
+            if (PhotonNetwork.IsMasterClient && photonView.IsMine)
             {
                 photonView.RPC("FillCubes", RpcTarget.All);
             }
@@ -82,6 +80,16 @@ namespace Level
                     i++;
                 }
             }
+        }
+
+        private void ResetPlatform()
+        {
+
+        }
+
+        public int[,] GetSlots()
+        {
+            return slots;
         }
     }
 }
