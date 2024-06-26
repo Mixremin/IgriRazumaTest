@@ -35,49 +35,73 @@ namespace Level
         [PunRPC]
         private void InitializeCubesRPC()
         {
-            Random.InitState(System.DateTime.Now.Millisecond);
-            for (int i = 0; i < 3; i++)
+            if (PhotonNetwork.IsMasterClient && photonView.IsMine)
             {
-                for (int j = 0; j < 3; j++)
+                Random.InitState(System.DateTime.Now.Millisecond);
+                for (int i = 0; i < 3; i++)
                 {
+                    for (int j = 0; j < 3; j++)
+                    {
 
-                    slots[i, j] = Random.Range(1, 3); // 1 - White cube, 2 - Black cube
+                        slots[i, j] = Random.Range(1, 3); // 1 - White cube, 2 - Black cube
 
+                    }
                 }
-            }
 
-            foreach (Transform child in transform)
-            {
-                exampleSlots.Add(child.GetComponent<ExampleSlot>());
+                foreach (Transform child in transform)
+                {
+                    exampleSlots.Add(child.GetComponent<ExampleSlot>());
+                }
             }
         }
 
         [PunRPC]
         private void FillCubesRPC()
         {
-            int i = 0;
-            int j = 0;
-            foreach (ExampleSlot slot in exampleSlots)
+            if (PhotonNetwork.IsMasterClient && photonView.IsMine)
             {
-                switch (slots[i, j])
+                int i = 0;
+                int j = 0;
+                foreach (ExampleSlot slot in exampleSlots)
                 {
-                    case 1:
-                        slot.SetWhiteCube();
-                        break;
-                    case 2:
-                        slot.SetBlackCube();
-                        break;
+                    switch (slots[i, j])
+                    {
+                        case 1:
+                            slot.SetWhiteCube();
+                            break;
+                        case 2:
+                            slot.SetBlackCube();
+                            break;
 
-                }
+                    }
 
-                if (j < 2)
-                {
-                    j++;
+                    if (j < 2)
+                    {
+                        j++;
+                    }
+                    else if (i < 2)
+                    {
+                        j = 0;
+                        i++;
+                    }
                 }
-                else if (i < 2)
+            }
+        }
+
+        [PunRPC]
+        private void ResetSlotsRPC()
+        {
+            if (PhotonNetwork.IsMasterClient && photonView.IsMine)
+            {
+                Random.InitState(System.DateTime.Now.Millisecond);
+                for (int i = 0; i < 3; i++)
                 {
-                    j = 0;
-                    i++;
+                    for (int j = 0; j < 3; j++)
+                    {
+
+                        slots[i, j] = Random.Range(1, 3); // 1 - White cube, 2 - Black cube
+
+                    }
                 }
             }
         }
@@ -86,7 +110,7 @@ namespace Level
         {
             if (PhotonNetwork.IsMasterClient && photonView.IsMine)
             {
-                photonView.RPC("InitializeCubesRPC", RpcTarget.All);
+                photonView.RPC("ResetSlotsRPC", RpcTarget.All);
                 photonView.RPC("FillCubesRPC", RpcTarget.All);
             }
         }

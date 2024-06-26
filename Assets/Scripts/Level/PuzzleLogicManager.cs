@@ -33,21 +33,23 @@ namespace Level
         [PunRPC]
         private void CompareSlotsRPC()
         {
-
-            int[,] setSlots = setPlatformManager.GetSlots();
-            int[,] compsSlot = compPlatformManager.GetSlots();
-
-            for (int i = 0; i < 3; i++)
+            if (PhotonNetwork.IsMasterClient && photonView.IsMine)
             {
-                for (int j = 0; j < 3; j++)
+                int[,] setSlots = setPlatformManager.GetSlots();
+                int[,] compsSlot = compPlatformManager.GetSlots();
+
+                for (int i = 0; i < 3; i++)
                 {
-                    if (setSlots[i, j] != compsSlot[i, j])
+                    for (int j = 0; j < 3; j++)
                     {
-                        return;
+                        if (setSlots[i, j] != compsSlot[i, j])
+                        {
+                            return;
+                        }
                     }
                 }
+                compPlatformManager.ResetPlatform();
             }
-            compPlatformManager.ResetPlatform();
         }
     }
 }
