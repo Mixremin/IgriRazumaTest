@@ -11,6 +11,7 @@ namespace Server
             Debug.Log("Player connected");
             FindObjectOfType<FirstPersonMovement>().GetComponent<PhotonView>().TransferOwnership(newPlayer);
             FindObjectOfType<FirstPersonLook>().GetComponent<PhotonView>().TransferOwnership(newPlayer);
+
         }
     }
 }
