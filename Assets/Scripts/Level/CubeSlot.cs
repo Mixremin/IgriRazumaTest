@@ -17,8 +17,10 @@ namespace Level
     [AddComponentMenu("Scripts/Level/Level.CubeSlot")]
     internal class CubeSlot : MonoBehaviour, IInteractable
     {
+        [Header("Cube Placement")]
         [SerializeField]
         private Transform cubePoint;
+
 
         public SlotState SlState
         {

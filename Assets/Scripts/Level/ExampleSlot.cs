@@ -8,13 +8,14 @@ namespace Level
     {
 
         public SlotState SlState { get; set; } = SlotState.Empty;
-
+        [Header("Cube Prefabs")]
         [SerializeField]
         private GameObject blackCube;
 
         [SerializeField]
         private GameObject whiteCube;
 
+        [Header("Cube placement")]
         [SerializeField]
         private Transform cubeSlot;
 

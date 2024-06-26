@@ -6,13 +6,17 @@ namespace Level
     [AddComponentMenu("Scripts/Level/Level.PuzzleLogicManager")]
     internal class PuzzleLogicManager : MonoBehaviour
     {
+        [Header("Managers")]
         [SerializeField]
         private ComparissonPlatform compPlatformManager;
 
         [SerializeField]
         private SetPlatform setPlatformManager;
 
+        [SerializeField]
+        private AudioSource winSource;
 
+        [Header("Photon(For debug)")]
         [SerializeField]
         private PhotonView photonView;
 
@@ -48,6 +52,7 @@ namespace Level
                         }
                     }
                 }
+                winSource.Play();
                 compPlatformManager.ResetPlatform();
             }
         }

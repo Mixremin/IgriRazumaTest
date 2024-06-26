@@ -7,9 +7,11 @@ namespace Level
     [AddComponentMenu("Scripts/Level/Level.SetPlatform")]
     internal class SetPlatform : MonoBehaviour
     {
+        [Header("Slots")]
         [SerializeField]
         private List<CubeSlot> cubeSlots;
 
+        [Header("Puzzle logic manager")]
         [SerializeField]
         private PuzzleLogicManager puzzleLogicManager;
 

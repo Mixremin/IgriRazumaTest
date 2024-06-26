@@ -8,6 +8,7 @@ namespace Level
     [AddComponentMenu("Scripts/Level/Level.ComparissonPlatform")]
     internal class ComparissonPlatform : MonoBehaviour
     {
+        [Header("Slots")]
         [SerializeField]
         private List<ExampleSlot> exampleSlots;
 
