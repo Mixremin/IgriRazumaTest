@@ -3,51 +3,49 @@ using UnityEngine;
 
 namespace Items
 {
+    [RequireComponent(typeof(PhotonView), typeof(BoxCollider))]
     [AddComponentMenu("Scripts/Items/Items.Box")]
-    internal class Box : MonoBehaviour, ICarryable
+    internal class Cube : MonoBehaviour, ICarryable
     {
-        internal enum BoxColor
+        internal enum CubeColor
         {
             white,
             black
         }
 
-        public BoxColor color = BoxColor.white;
+        public CubeColor Color = CubeColor.white;
 
-        [SerializeField]
+        private new BoxCollider collider;
         private PhotonView photonView;
-
-        [SerializeField]
-        private Rigidbody rb;
 
         private void Start()
         {
             photonView = GetComponent<PhotonView>();
-            rb = GetComponent<Rigidbody>();
+            collider = GetComponent<BoxCollider>();
         }
 
         public void PickUp(Photon.Realtime.Player player)
         {
             photonView.TransferOwnership(player);
-            photonView.RPC("SetKinematic", RpcTarget.All);
+            photonView.RPC("SetIsTrigger", RpcTarget.All);
         }
 
         [PunRPC]
-        private void SetKinematic()
+        private void SetIsTrigger()
         {
-            rb.isKinematic = true;
+            collider.isTrigger = true;
         }
 
         public void Drop()
         {
             photonView.TransferOwnership(PhotonNetwork.MasterClient);
-            photonView.RPC("UnsetKinematic", RpcTarget.All);
+            photonView.RPC("UnsetIsTrigger", RpcTarget.All);
         }
 
         [PunRPC]
-        private void UnsetKinematic()
+        private void UnsetIsTrigger()
         {
-            rb.isKinematic = false;
+            collider.isTrigger = false;
         }
     }
 }

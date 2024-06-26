@@ -45,6 +45,10 @@ MonoBehaviour:
   - UnsetKienematic
   - SetKinematic
   - UnsetKinematic
+  - SetCubeInSlotRPC
+  - UncarryItem
+  - SetIsTrigger
+  - UnsetIsTrigger
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

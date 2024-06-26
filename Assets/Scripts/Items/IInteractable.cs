@@ -1,10 +1,7 @@
-﻿using UnityEngine;
-
-namespace Items
+﻿namespace Items
 {
-    [AddComponentMenu("Scripts/Items/Items.IInteractable")]
     internal interface IInteractable
     {
-        public void Interaction();
+        public void Interaction(int cubeID);
     }
 }

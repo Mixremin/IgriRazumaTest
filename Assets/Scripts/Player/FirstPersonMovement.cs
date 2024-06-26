@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace Player
 {
+    [RequireComponent(typeof(PhotonView))]
     internal class FirstPersonMovement : MonoBehaviour
     {
         [SerializeField]

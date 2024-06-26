@@ -9,6 +9,7 @@ namespace Player
         standart,
         carrying
     }
+
     internal class Interaction : MonoBehaviour
     {
         [SerializeField]
@@ -24,11 +25,11 @@ namespace Player
         private Camera playerCam;
 
 
-        public InteractionState InteractionState = InteractionState.standart;
-
+        private InteractionState interactionState = InteractionState.standart;
         private PhotonView photonView;
         private Vector3 rayOrigin;
         private GameObject carryingItem;
+        private int carryingObjectID;
 
         private void Start()
         {
@@ -46,21 +47,29 @@ namespace Player
                 rayOrigin = playerCam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0));
                 if (Input.GetKeyUp(interactionKey))
                 {
-                    switch (InteractionState)
+                    switch (interactionState)
                     {
                         case InteractionState.standart:
                             if (Physics.Raycast(rayOrigin, playerCam.transform.forward, out RaycastHit hit, interactionRange))
                             {
                                 if (hit.transform.TryGetComponent(out ICarryable carryable))
                                 {
-                                    int objectID = hit.transform.GetComponent<PhotonView>().ViewID;
+                                    carryingObjectID = hit.transform.GetComponent<PhotonView>().ViewID;
                                     carryable.PickUp(photonView.Owner);
-                                    photonView.RPC("PickUpItem", RpcTarget.All, objectID);
+                                    photonView.RPC("PickUpItem", RpcTarget.All, carryingObjectID);
                                 }
                             }
                             break;
                         case InteractionState.carrying:
-
+                            if (Physics.Raycast(rayOrigin, playerCam.transform.forward, out hit, interactionRange))
+                            {
+                                if (hit.transform.TryGetComponent(out IInteractable interactable))
+                                {
+                                    carryingItem.GetComponent<Cube>().Drop();
+                                    interactable.Interaction(carryingObjectID);
+                                    photonView.RPC("UncarryItem", RpcTarget.All);
+                                }
+                            }
                             photonView.RPC("DropItem", RpcTarget.All);
                             break;
                     }
@@ -71,30 +80,42 @@ namespace Player
         [PunRPC]
         private void PickUpItem(int objectID)
         {
-            InteractionState = InteractionState.carrying;
-            StandartInteraction(PhotonView.Find(objectID).gameObject);
+            interactionState = InteractionState.carrying;
+            PickingUp(PhotonView.Find(objectID).gameObject);
         }
 
-        private void StandartInteraction(GameObject item)
+        private void PickingUp(GameObject item)
         {
             carryingItem = item;
             item.transform.parent = carryingPoint.transform;
-            item.transform.rotation = Quaternion.Euler(Vector3.zero);
+            item.transform.localRotation = Quaternion.Euler(Vector3.zero);
             item.transform.localPosition = Vector3.zero;
         }
 
         [PunRPC]
         private void DropItem()
         {
-            InteractionState = InteractionState.standart;
-            CarryingInteraction();
+            interactionState = InteractionState.standart;
+            if (carryingItem != null)
+            {
+                Dropping();
+            }
+
         }
 
-        private void CarryingInteraction()
+        private void Dropping()
         {
-            carryingItem.GetComponent<Box>().Drop();
+            carryingItem.GetComponent<Cube>().Drop();
             carryingItem.transform.parent = null;
             carryingItem = null;
+            carryingObjectID = -1;
+        }
+
+        [PunRPC]
+        private void UncarryItem()
+        {
+            carryingItem = null;
+            carryingObjectID = -1;
         }
     }
 }

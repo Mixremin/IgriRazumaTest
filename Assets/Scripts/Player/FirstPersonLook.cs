@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace Player
 {
+    [RequireComponent(typeof(PhotonView))]
     internal class FirstPersonLook : MonoBehaviour
     {
         [Header("Settings")]
