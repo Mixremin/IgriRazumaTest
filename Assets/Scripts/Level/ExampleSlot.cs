@@ -7,17 +7,7 @@ namespace Level
     internal class ExampleSlot : MonoBehaviour
     {
 
-        public SlotState SlState
-        {
-            get => slState;
-            set
-            {
-                slState = value;
-                Debug.Log("New slot state:" + slState);
-            }
-        }
-
-        private SlotState slState = SlotState.Empty;
+        public SlotState SlState { get; set; } = SlotState.Empty;
 
         [SerializeField]
         private GameObject blackCube;
@@ -48,8 +38,8 @@ namespace Level
             {
                 PhotonNetwork.Destroy(cubeInSlot);
             }
-            _ = PhotonNetwork.Instantiate(whiteCube.name, cubeSlot.position, Quaternion.identity);
-            slState = SlotState.White;
+            cubeInSlot = PhotonNetwork.Instantiate(whiteCube.name, cubeSlot.position, Quaternion.identity);
+            SlState = SlotState.White;
         }
 
         public void SetBlackCube()
@@ -64,8 +54,8 @@ namespace Level
             {
                 PhotonNetwork.Destroy(cubeInSlot);
             }
-            _ = PhotonNetwork.Instantiate(blackCube.name, cubeSlot.position, Quaternion.identity);
-            slState = SlotState.Black;
+            cubeInSlot = PhotonNetwork.Instantiate(blackCube.name, cubeSlot.position, Quaternion.identity);
+            SlState = SlotState.Black;
         }
     }
 }

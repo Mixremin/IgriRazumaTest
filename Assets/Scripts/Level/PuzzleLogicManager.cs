@@ -16,7 +16,7 @@ namespace Level
         [SerializeField]
         private PhotonView photonView;
 
-        private void Awake()
+        private void Start()
         {
             photonView = GetComponent<PhotonView>();
         }
@@ -43,12 +43,11 @@ namespace Level
                 {
                     if (setSlots[i, j] != compsSlot[i, j])
                     {
-                        Debug.Log("Incorrect puzzle");
                         return;
                     }
                 }
             }
-            Debug.Log("Puzzle Solved");
+            compPlatformManager.ResetPlatform();
         }
     }
 }

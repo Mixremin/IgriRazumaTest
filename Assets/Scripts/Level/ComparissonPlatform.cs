@@ -19,7 +19,7 @@ namespace Level
             photonView = GetComponent<PhotonView>();
             if (PhotonNetwork.IsMasterClient && photonView.IsMine)
             {
-                photonView.RPC("InitializeCubes", RpcTarget.All);
+                photonView.RPC("InitializeCubesRPC", RpcTarget.All);
             }
 
         }
@@ -28,12 +28,12 @@ namespace Level
         {
             if (PhotonNetwork.IsMasterClient && photonView.IsMine)
             {
-                photonView.RPC("FillCubes", RpcTarget.All);
+                photonView.RPC("FillCubesRPC", RpcTarget.All);
             }
         }
 
         [PunRPC]
-        private void InitializeCubes()
+        private void InitializeCubesRPC()
         {
             Random.InitState(System.DateTime.Now.Millisecond);
             for (int i = 0; i < 3; i++)
@@ -53,7 +53,7 @@ namespace Level
         }
 
         [PunRPC]
-        private void FillCubes()
+        private void FillCubesRPC()
         {
             int i = 0;
             int j = 0;
@@ -82,9 +82,13 @@ namespace Level
             }
         }
 
-        private void ResetPlatform()
+        public void ResetPlatform()
         {
-
+            if (PhotonNetwork.IsMasterClient && photonView.IsMine)
+            {
+                photonView.RPC("InitializeCubesRPC", RpcTarget.All);
+                photonView.RPC("FillCubesRPC", RpcTarget.All);
+            }
         }
 
         public int[,] GetSlots()

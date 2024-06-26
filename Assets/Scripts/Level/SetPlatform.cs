@@ -16,15 +16,8 @@ namespace Level
         private int[,] slots = new int[3, 3];
         private PhotonView photonView;
 
-        private void OnEnable()
-        {
-            if (PhotonNetwork.IsMasterClient && photonView.IsMine)
-            {
-                CubeSlot.SlotStateChanged += RenewSlotsInfo;
-            }
-        }
 
-        private void Awake()
+        private void Start()
         {
             photonView = GetComponent<PhotonView>();
             if (PhotonNetwork.IsMasterClient && photonView.IsMine)
@@ -32,6 +25,7 @@ namespace Level
                 photonView.RPC("InitializeSlotsRPC", RpcTarget.All);
                 photonView.RPC("RenewSlotsInfoRPC", RpcTarget.All);
             }
+            CubeSlot.SlotStateChanged += RenewSlotsInfo;
         }
 
         [PunRPC]

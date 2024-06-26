@@ -26,7 +26,6 @@ namespace Level
             set
             {
                 slState = value;
-                Debug.Log("New slot state:" + slState);
                 SlotStateChanged?.Invoke();
             }
         }

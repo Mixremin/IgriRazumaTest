@@ -2048,6 +2048,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 1148580691}
     m_Modifications:
     - target: {fileID: 491596384500148703, guid: 8f93fa1b075bd7e4b9969f256b26489a, type: 3}
+      propertyPath: photonView
+      value: 
+      objectReference: {fileID: 6166188650763540309}
+    - target: {fileID: 491596384500148703, guid: 8f93fa1b075bd7e4b9969f256b26489a, type: 3}
       propertyPath: setPlatformManager
       value: 
       objectReference: {fileID: 9171947288629157938}
@@ -2108,6 +2112,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8f93fa1b075bd7e4b9969f256b26489a, type: 3}
+--- !u!114 &6166188650763540309 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6682310000357772117, guid: 8f93fa1b075bd7e4b9969f256b26489a, type: 3}
+  m_PrefabInstance: {fileID: 6166188650763540308}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &7603687153585155564
 PrefabInstance:
   m_ObjectHideFlags: 0
