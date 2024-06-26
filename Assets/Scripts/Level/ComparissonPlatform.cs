@@ -24,6 +24,7 @@ namespace Level
             photonView = GetComponent<PhotonView>();
             if (PhotonNetwork.IsMasterClient && photonView.IsMine)
             {
+                photonView.RPC("ResetSlotsRPC", RpcTarget.All);
                 photonView.RPC("InitializeCubesRPC", RpcTarget.All);
             }
 
@@ -42,17 +43,6 @@ namespace Level
         {
             if (PhotonNetwork.IsMasterClient && photonView.IsMine)
             {
-                Random.InitState(System.DateTime.Now.Millisecond);
-                for (int i = 0; i < 3; i++)
-                {
-                    for (int j = 0; j < 3; j++)
-                    {
-
-                        slots[i, j] = Random.Range(1, 3); // 1 - White cube, 2 - Black cube
-
-                    }
-                }
-
                 foreach (Transform child in transform)
                 {
                     exampleSlots.Add(child.GetComponent<ExampleSlot>());
@@ -77,7 +67,6 @@ namespace Level
                         case 2:
                             slot.SetBlackCube();
                             break;
-
                     }
 
                     if (j < 2)
@@ -103,7 +92,6 @@ namespace Level
                 {
                     for (int j = 0; j < 3; j++)
                     {
-
                         slots[i, j] = Random.Range(1, 3); // 1 - White cube, 2 - Black cube
 
                     }

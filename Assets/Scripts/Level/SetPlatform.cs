@@ -37,8 +37,6 @@ namespace Level
             {
                 cubeSlots.Add(child.GetComponent<CubeSlot>());
             }
-
-
         }
 
         private void RenewSlotsInfo()

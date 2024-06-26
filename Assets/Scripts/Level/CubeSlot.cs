@@ -49,7 +49,6 @@ namespace Level
         public void Interaction(int cubeID)
         {
             photonView.RPC("SetCubeInSlotRPC", RpcTarget.All, cubeID);
-
         }
 
         [PunRPC]

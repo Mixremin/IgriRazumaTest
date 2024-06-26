@@ -26,13 +26,11 @@ namespace Player
         private void Reset()
         {
             character = GetComponentInParent<FirstPersonMovement>().transform;
-            // photonView = GetComponent<PhotonView>();
         }
 
         private void Start()
         {
             Cursor.lockState = CursorLockMode.Locked;
-            //Cursor.visible = true;
         }
 
         private void Update()

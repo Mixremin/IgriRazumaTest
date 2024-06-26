@@ -28,7 +28,6 @@ namespace Level
             {
                 photonView.RPC("CompareSlotsRPC", RpcTarget.All);
             }
-
         }
 
         [PunRPC]
