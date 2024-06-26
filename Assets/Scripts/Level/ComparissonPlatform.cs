@@ -12,6 +12,10 @@ namespace Level
         [SerializeField]
         private List<ExampleSlot> exampleSlots;
 
+        [Header("Sound")]
+        [SerializeField]
+        private AudioSource winSource;
+
         private int[,] slots = new int[3, 3];
         private PhotonView photonView;
 
@@ -109,6 +113,7 @@ namespace Level
 
         public void ResetPlatform()
         {
+            winSource.Play();
             if (PhotonNetwork.IsMasterClient && photonView.IsMine)
             {
                 photonView.RPC("ResetSlotsRPC", RpcTarget.All);

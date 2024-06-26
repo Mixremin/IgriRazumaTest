@@ -13,9 +13,6 @@ namespace Level
         [SerializeField]
         private SetPlatform setPlatformManager;
 
-        [SerializeField]
-        private AudioSource winSource;
-
         [Header("Photon(For debug)")]
         [SerializeField]
         private PhotonView photonView;
@@ -52,8 +49,7 @@ namespace Level
                         }
                     }
                 }
-                winSource.Play();
-                compPlatformManager.ResetPlatform();
+                compPlatformManager.ResetPlatform(); //On win change pattern
             }
         }
     }

@@ -47,6 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   compPlatformManager: {fileID: 0}
   setPlatformManager: {fileID: 0}
+  photonView: {fileID: 0}
 --- !u!114 &6682310000357772117
 MonoBehaviour:
   m_ObjectHideFlags: 0
